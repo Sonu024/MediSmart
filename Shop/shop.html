@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MediSmart - Shop </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<div class="max-w-7xl mx-auto px-4 py-6">
+  <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+
+    <!-- Sidebar (Search + Categories) -->
+    <aside class="md:col-span-1 order-1 md:order-none space-y-6">
+      <!-- Search -->
+      <div class="bg-white rounded-lg shadow p-4">
+        <h3 class="text-lg font-semibold mb-3 text-gray-800">Search Products</h3>
+        <div class="relative">
+          <input type="text" id="searchInput" placeholder="Search..."
+                 class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-400" />
+          <svg class="absolute left-3 top-2.5 w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="bg-blue-600 text-white p-4 text-lg font-semibold">Product Categories</div>
+        <ul id="categoryList" class="divide-y divide-blue-100 text-gray-800 cursor-pointer select-none">
+          <li class="px-4 py-3 hover:bg-blue-100" data-category="All">All</li>
+          <li class="px-4 py-3 hover:bg-blue-100" data-category="Pain Relief / Fever">🩹 Pain Relief / Fever</li>
+          <li class="px-4 py-3 hover:bg-blue-100" data-category="Cold, Cough, and Flu">🤧 Cold, Cough, and Flu</li>
+          <li class="px-4 py-3 hover:bg-blue-100" data-category="Chronic Illness Medication">🩸 Chronic Illness Medication</li>
+          <li class="px-4 py-3 hover:bg-blue-100" data-category="Digestive Health">🩺 Digestive Health</li>
+          <li class="px-4 py-3 hover:bg-blue-100" data-category="Vitamins and Supplements">❤️ Vitamins and Supplements</li>
+          <li class="px-4 py-3 hover:bg-blue-100" data-category="Skin & Wound Care">🌸  Skin & Wound Care</li>
+          <li class="px-4 py-3 hover:bg-blue-100" data-category="Baby & Mother Care">🧴 Baby & Mother Care</li>
+          <li class="px-4 py-3 hover:bg-blue-100" data-category="Diabetes Management">🩸 Diabetes Management</li>
+          <li class="px-4 py-3 hover:bg-blue-100" data-category="Mental Health & Sleep">🧠 Mental Health & Sleep</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="md:col-span-4 order-2 md:order-none flex flex-col relative">
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-6 sticky top-0 bg-gray-100 z-20 py-2">
+        <h2 class="text-3xl font-bold text-blue-700">Medicines & Care Products</h2>
+        <div class="relative">
+          <button id="cartIcon" class="relative text-3xl">
+            🛒
+            <span id="cartCount"
+                  class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5">0</span>
+          </button>
+          <div id="cartDropdown"
+               class="hidden absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg p-4 z-30 max-h-96 overflow-y-auto">
+            <h3 class="text-md font-semibold mb-2">Cart Items</h3>
+            <ul id="cartItems" class="space-y-2"></ul>
+            <button id="checkoutBtn"
+                    class="mt-3 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition disabled:opacity-50"
+                    disabled>
+              Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products -->
+      <div id="products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      <!-- Pagination -->
+      <nav id="pagination" class="mt-6 flex justify-center space-x-2"></nav>
+    </main>
+  </div>
+</div>
+
+<script>
+    const allProducts = [
+    { id: 1, name: "Paracetamol", category: "Pain Relief / Fever", img: "images/paracetamol.jpg", price: 700 },
+    { id: 2, name: "ORS Packets", category: "Digestive Health", img: "images/ORS-scaled.jpg", price: 999 },
+    { id: 3, name: "Domperidone", category: "Digestive Health", img: "images/Domperidone.webp", price: 999 },
+    { id: 4, name: "Pantaprazole",category: "Digestive Health", img: "images/Pantoprazole.jpeg", price: 999 },
+    { id: 5, name: "Vitamin C tablets", category: "Vitamins and Supplements", img: "images/vitamin c.jpeg", price: 850 },
+    { id: 6, name: "Iron Supplements", category: "Vitamins and Supplements", img: "images/Iron Tablet.jpg", price: 850 },
+    { id: 7, name: "Azithromycin", category: "Skin & Wound Care", img: "images/Azithromycin.jpg", price: 120 },
+    { id: 8, name: "Antiseptic Cream", category: "Skin & Wound Care", img: "images/Antiseptic Cream.webp", price: 120 },
+    { id: 9, name: "Cerelac", category: "Baby & Mother Care", img: "images/Cerelac.jpeg", price: 650 },
+    { id: 10, name: "lactogen", category: "Baby & Mother Care", img: "images/Lactogen.jpeg", price: 650 },
+    { id: 11, name: "Dipaper Rash Cream", category: "Baby & Mother Care", img: "images/Diaper RAsh cream.jpeg", price: 650 },
+    { id: 12, name: "Maternity Pads", category: "Baby & Mother Care", img: "images/Maternity Pads.jpeg", price: 650 },
+    { id: 13, name: "Stretch Mark Cream", category: "Baby & Mother Care", img: "images/Stretch Mark Cream.jpeg", price: 650 },
+    { id: 14, name: "Atorvastatin", category: "Chronic Illness Medication", img: "images/Atorvastatin.jpeg", price: 650 },
+    { id: 15, name: "Amoxicillin", category: "Chronic Illness Medication", img: "images/Amoxicillin.jpeg", price: 650 },
+    { id: 16, name: "Decold", category: "Cold, Cough, and Flu", img: "images/Decold.jpg", price: 300 },
+    { id: 17, name: "Dextromethorphan", category: "Cold, Cough, and Flu", img: "images/dextromethorphan-cough-syrup.jpeg", price: 300 },
+    { id: 18, name: "Loratadine", category: "Cold, Cough, and Flu", img: "images/loratadine-tablets.jpeg", price: 300 },
+    { id: 19, name: "Fluoxetine-tablets", category: "Mental Health & Sleep", img: "images/fluoxetine.png", price: 300 },
+    { id: 20, name: "Melatonin", category: "Mental Health & Sleep", img: "images/Melatonin.jpg", price: 300 },
+    { id: 21, name: "Alprazolam", category: "Mental Health & Sleep", img: "images/Alprazolam.jpeg", price: 300 },
+    { id: 22, name: "Metformin", category: "Diabetes Management", img: "images/Metformin-tablets.jpg", price: 300 },
+    { id: 23, name: "Glimepiride", category: "Diabetes Management", img: "images/Glimepiride-.jpeg", price: 300 },
+    { id: 24, name: "Glictazide", category: "Diabetes Management", img: "images/Gliclazide.jpg", price: 300 },
+  ];
+
+  let cart = [];
+  let selectedCategory = "All";
+  let currentPage = 1;
+  const productsPerPage = 6;
+
+  const productsContainer = document.getElementById("products");
+  const cartIcon = document.getElementById("cartIcon");
+  const cartDropdown = document.getElementById("cartDropdown");
+  const cartCount = document.getElementById("cartCount");
+  const cartItemsContainer = document.getElementById("cartItems");
+  const checkoutBtn = document.getElementById("checkoutBtn");
+  const searchInput = document.getElementById("searchInput");
+  const paginationContainer = document.getElementById("pagination");
+
+  function displayProducts(products = allProducts) {
+    productsContainer.innerHTML = "";
+
+    // Calculate pagination slice
+    const start = (currentPage - 1) * productsPerPage;
+    const paginatedProducts = products.slice(start, start + productsPerPage);
+
+    paginatedProducts.forEach(product => {
+      const card = document.createElement("div");
+      card.className = "bg-white p-4 rounded-lg shadow text-center flex flex-col";
+      card.innerHTML = `
+        <img src="${product.img}" alt="${product.name}" class="w-full h-40 object-cover rounded mb-3">
+        <h4 class="text-lg font-semibold">${product.name}</h4>
+        <p class="text-sm text-gray-600 mb-2">${product.category}</p>
+        <p class="text-green-600 font-bold mb-2">Rs. ${product.price}</p>
+        <button onclick="addToCart(${product.id})"
+                class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mb-2">
+          Add to Cart
+        </button>
+        <button onclick="buyNow(${product.id})"
+                class="bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
+          Buy Now
+        </button>
+      `;
+      productsContainer.appendChild(card);
+    });
+
+    renderPagination(products.length);
+  }
+
+  function renderPagination(totalProducts) {
+    paginationContainer.innerHTML = "";
+
+    const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+    if (totalPages <= 1) return; // no need for pagination if only one page
+
+    // Previous button <<
+    const prevBtn = document.createElement("button");
+    prevBtn.textContent = "<<";
+    prevBtn.className = `px-3 py-1 rounded border ${currentPage === 1 ? "text-gray-400 border-gray-300 cursor-not-allowed" : "text-blue-600 border-blue-600 hover:bg-blue-100"}`;
+    prevBtn.disabled = currentPage === 1;
+    prevBtn.onclick = () => {
+      if (currentPage > 1) {
+        currentPage--;
+        filterProducts();
+      }
+    };
+    paginationContainer.appendChild(prevBtn);
+
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+      const pageBtn = document.createElement("button");
+      pageBtn.textContent = i;
+      pageBtn.className = `px-3 py-1 rounded border ${currentPage === i ? "bg-blue-600 text-white" : "text-blue-600 border-blue-600 hover:bg-blue-100"}`;
+      pageBtn.onclick = () => {
+        currentPage = i;
+        filterProducts();
+      };
+      paginationContainer.appendChild(pageBtn);
+    }
+
+    // Next button >>
+    const nextBtn = document.createElement("button");
+    nextBtn.textContent = ">>";
+    nextBtn.className = `px-3 py-1 rounded border ${currentPage === totalPages ? "text-gray-400 border-gray-300 cursor-not-allowed" : "text-blue-600 border-blue-600 hover:bg-blue-100"}`;
+    nextBtn.disabled = currentPage === totalPages;
+    nextBtn.onclick = () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        filterProducts();
+      }
+    };
+    paginationContainer.appendChild(nextBtn);
+  }
+
+  function updateCartUI() {
+    cartCount.textContent = cart.length;
+    cartItemsContainer.innerHTML = "";
+
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = `<li class='text-gray-500'>Cart is empty.</li>`;
+      checkoutBtn.disabled = true;
+      return;
+    }
+
+    cart.forEach((item, index) => {
+      cartItemsContainer.innerHTML += `
+        <li class="flex justify-between items-center border-b pb-1">
+          <span class="text-sm">${item.name}</span>
+          <button onclick="removeFromCart(${index})" class="text-red-600 text-xs">Remove</button>
+        </li>
+      `;
+    });
+
+    checkoutBtn.disabled = false;
+  }
+
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCartUI();
+  }
+
+  function addToCart(id) {
+    const item = allProducts.find(p => p.id === id);
+    if (item) {
+      cart.push(item);
+      updateCartUI();
+    }
+  }
+
+  function buyNow(id) {
+    const item = allProducts.find(p => p.id === id);
+    if (item) {
+      alert(`Proceeding to buy: ${item.name}`);
+    }
+  }
+
+  function filterProducts() {
+    const searchText = searchInput.value.toLowerCase();
+    const filtered = allProducts.filter(p =>
+      (selectedCategory === "All" || p.category === selectedCategory) &&
+      p.name.toLowerCase().includes(searchText)
+    );
+
+    // Reset to page 1 if filtering/searching changes
+    if (currentPage > Math.ceil(filtered.length / productsPerPage)) {
+      currentPage = 1;
+    }
+
+    displayProducts(filtered);
+  }
+
+  // Set up category click
+  document.querySelectorAll('#categoryList li').forEach(item => {
+    item.addEventListener('click', () => {
+      selectedCategory = item.getAttribute('data-category');
+      currentPage = 1;  // reset to first page on category change
+      filterProducts();
+    });
+  });
+
+  // Search input
+  searchInput.addEventListener('input', () => {
+    currentPage = 1;  // reset to first page on search
+    filterProducts();
+  });
+
+  // Toggle cart
+  cartIcon.addEventListener("click", () => {
+    cartDropdown.classList.toggle("hidden");
+  });
+
+  // Initial display
+  displayProducts();
+
+</script>
+
+</body>
+</html>
