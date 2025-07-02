@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MedSmart - Services</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    .line-hover {
+      position: relative;
+    }
+    .line-hover::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background-color: white;
+      transition: width 0.3s ease;
+    }
+    .line-hover:hover::after {
+      width: 100%;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<!-- Navbar -->
+<nav class="bg-blue-700 text-white px-4 md:px-6 py-4">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
+    <h1 class="text-2xl font-bold">MedSmart</h1>
+    <ul class="flex flex-wrap justify-center md:justify-end space-x-4 md:space-x-6 text-sm md:text-base">
+      <li><a href="#" class="hover:underline">Home</a></li>
+      <li><a href="#" class="hover:underline font-semibold">Services</a></li>
+      <li><a href="#" class="hover:underline">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero + Sidebar -->
+<section class="max-w-7xl mx-auto px-4 md:px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 items-start">
+  <!-- Hero Section -->
+  <div class="relative w-full h-[300px] sm:h-[400px] md:h-[600px] rounded-lg shadow-lg transform transition duration-300 hover:scale-105 overflow-hidden shadow-lg col-span-1 md:col-span-2" id="hero">
+    <img src="image/image 1.jpg" alt="Hero" class="w-full h-full object-cover" id="hero-img" />
+    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center px-4 md:px-6">
+      <div>
+        <h2 class="text-white text-xl sm:text-2xl md:text-3xl font-bold mb-2" id="hero-title">Smart Scheduling & Appointments</h2>
+        <p class="text-white text-xs sm:text-sm md:text-base leading-relaxed" id="hero-text">
+          Book, reschedule, and manage appointments with ease. Enjoy reduced wait times and automated reminders with MedSmart.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="w-full md:w-auto">
+    <div class="w-full bg-blue-500 rounded shadow-lg text-white text-sm md:text-base">
+      <div class="p-4 font-semibold border-b border-blue-400">
+        Medlife Services
+      </div>
+      <ul>
+        <li class="px-4 py-3 border-b border-blue-400 line-hover cursor-pointer"
+            data-hero-img="image/general checkup.jpg"
+            data-hero-title="General & Preventive Care"
+            data-hero-text="Ensure optimal health with regular checkups and personalized prevention plans."
+            data-cards='[
+              {"img":"image/history review.JPG","title":"Medical History Review","desc":"Routine checkups to monitor your health."},
+              {"img":"image/Physical examination.JPG","title":"Physical Examination","desc":"Stay protected with our complete vaccine services."},
+              {"img":"image/ECG.jpg","title":"ECG","desc":"One-on-one guidance for healthy living."}
+            ]'>General and Preventive Care</li>
+
+        <li class="px-4 py-3 border-b border-blue-400 line-hover cursor-pointer"
+            data-hero-img="image/Cosmetics.jpg"
+            data-hero-title="Cosmetic Solutions"
+            data-hero-text="Enhance your appearance with advanced cosmetic dental procedures."
+            data-cards='[
+              {"img":"image/teeth.jpg", "title":"Teeth Whitening", "desc":"Brighten your smile with safe, effective whitening."},
+              {"img":"image/HydraFacial.jpg", "title":"Hydrafacial", "desc":"Hydrate and rejuvenate your skin with advanced facial care."},
+              {"img":"image/Acne.jpg", "title":"Acne Treatment", "desc":"Get clearer skin with medical-grade acne solutions."}
+            ]'>Cosmetic Solutions</li>
+
+        <li class="px-4 py-3 border-b border-blue-400 line-hover cursor-pointer"
+            data-hero-img="image/orthopedics.jpg"
+            data-hero-title="Orthopedic Care"
+            data-hero-text="Bone, joint, and muscle care."
+            data-cards='[
+              {"img":"image/arthoscopy.jpg","title":"Arthroscopy","desc":"A minimally invasive procedure using a small camera to diagnose and treat joint problems."},
+              {"img":"image/fracture.jpg","title":"Fracture Fixation","desc":"The use of casts, plates, screws, or rods to stabilize and heal broken bones."},
+              {"img":"image/Joint.jpg","title":"Joint Replacement Surgery ","desc":"Replacing damaged joint surfaces with artificial implants to restore mobility and relieve pain."}
+            ]'>Orthopedic Care</li>
+
+        <li class="px-4 py-3 border-b border-blue-400 line-hover cursor-pointer"
+            data-hero-img="image/Orthodotics.jpg"
+            data-hero-title="Orthodonitics"
+            data-hero-text="Restore damaged or missing teeth with durable and aesthetic solutions."
+            data-cards='[
+              {"img":"image/Filling.jpg","title":" Teeth Fillings","desc":"Treat infected tooth roots effectively."},
+              {"img":"image/Crown.jpeg","title":" Teeth Crowns","desc":"Relieve jaw pain and discomfort."},
+              {"img":"image/Braces.jpeg","title":"Braces","desc":"Modern, painless procedures."}
+            ]'>Orthodonitics</li>
+
+        <li class="px-4 py-3 border-b border-blue-400 line-hover cursor-pointer"
+            data-hero-img="image/Neurology.jpg"
+            data-hero-title="Neurology"
+            data-hero-text="Specialized care for disorders of the brain, spine, and nervous system."
+            data-cards='[
+              {"img":"image/ECG.jpg","title":"ECG","desc":"Brain wave activity test"},
+              {"img":"image/MRI.jpeg","title":"MRI & CT Scan","desc":" Muscle and nerve function"},
+              {"img":"image/EMG.jpg","title":"EMG/NCS","desc":" Imaging for brain and spinal cord"}
+            ]'>Neurology</li>
+
+        <li class="px-4 py-3 border-b border-blue-400 line-hover cursor-pointer"
+            data-hero-img="image/Endocrinology.jpg"
+            data-hero-title="Endocrinology"
+            data-hero-text="Diagnosis and treatment of hormone-related disorders and metabolic issues."
+            data-cards='[
+              {"img":"image/Cortisol.jpg","title":"Cortisol Level Test","desc":"Evaluates adrenal hormone activity."},
+              {"img":"image/Insulin test.jpg","title":"Fasting Insulin Test","desc":"Measures insulin resistance and pancreatic function."},
+              {"img":"image/Gulcose test.jpg","title":"Blood Glucose Test","desc":"Measures blood sugar levels for diabetes diagnosis and monitoring."}
+            ]'>Endocrinology</li>
+
+        <li class="px-4 py-3 border-b border-blue-400 line-hover cursor-pointer"
+            data-hero-img="image/Pediatrics.jpg"
+            data-hero-title="Pediatrics"
+            data-hero-text="Healthcare for infants, children, and adolescents."
+            data-cards='[
+              {"img":"image/Growth.jpg","title":"Growth Monitoring","desc":"Tracks physical development milestones."},
+              {"img":"image/Screening.jpeg","title":"Developmental Screening","desc":"Evaluates speech, motor skills, and social behavior."},
+              {"img":"image/Vaccination.jpg","title":"Vaccination Status Assessment","desc":" Ensures immunization schedule compliance."}
+            ]'>Pediatrics</li>
+
+        <li class="px-4 py-3 border-b border-blue-400 line-hover cursor-pointer"
+            data-hero-img="image/Dermatology.jpeg"
+            data-hero-title="Dermatology"
+            data-hero-text="Skin, hair, and nail care."
+            data-cards='[
+              {"img":"image/Patch test.jpg","title":"Patch Testing","desc":"Identifies allergens causing skin reactions."},
+              {"img":"image/Trichoscopy.jpg","title":"Trichoscopy","desc":"Visual assessment of scalp and hair loss patterns."},
+              {"img":"image/Fungual test.jpg","title":"Fungal Culture Test","desc":"Diagnoses fungal infections of skin, hair, or nails"}
+            ]'>Dermatology</li>
+      </ul>
+    </div>
+
+    <!-- Opening Hours -->
+    <div class="bg-green-300 hover:bg-green-500 text-black rounded-lg border border-black transform transition duration-300 hover:scale-105 shadow-lg w-full md:w-80 h-auto md:h-40 mt-4 md:ml-16 px-6 py-4">
+      <h2 class="text-xl md:text-2xl font-semibold text-center mb-3">Opening Hours</h2>
+      <div class="flex justify-between mb-1 text-sm md:text-xl">
+        <span>Sun-Thur</span><span>9:00 - 6:00</span>
+      </div>
+      <div class="flex justify-between mb-1 text-sm md:text-xl">
+        <span>Friday</span><span>10:00 - 2:00</span>
+      </div>
+      <div class="flex justify-between text-sm md:text-xl">
+        <span>Saturday</span><span>Closed</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Our Services Section -->
+<section class="max-w-7xl mx-auto px-4 md:px-6 py-10">
+  <h3 class="text-xl md:text-2xl font-bold text-blue-700 mb-8 text-center  shadow-lg transform transition duration-300 hover:scale-105">Our Services</h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="service-cards">
+    <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg shadow-lg transform transition duration-300 hover:scale-105">
+      <img src="image/Pulmonary.jpg" alt="Booking" class="w-full h-40 object-cover rounded" />
+      <h4 class="text-xl font-semibold mt-4 text-blue-700">Pulmonary</h4>
+      <p class="text-gray-600 mt-2">Book appointments with doctors in real time from the comfort of your home.</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg shadow-lg transform transition duration-300 hover:scale-105">
+      <img src="image/Heart.jpg" alt="Reminders" class="w-full h-40 object-cover rounded" />
+      <h4 class="text-xl font-semibold mt-4 text-blue-700">Cardiology</h4>
+      <p class="text-gray-600 mt-2">Receive SMS or email reminders for upcoming appointments and rescheduling.</p>
+    </div>
+    <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg shadow-lg transform transition duration-300 hover:scale-105">
+      <img src="image/Cosmetics.jpg" alt="Dashboard" class="w-full h-40 object-cover rounded" />
+      <h4 class="text-xl font-semibold mt-4 text-blue-700">Cosmetic solutions</h4>
+      <p class="text-gray-600 mt-2">Doctors and staff can manage appointments, view schedules, and update status easily.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-blue-700 text-white mt-10 py-4 text-sm md:text-base">
+  <div class="max-w-7xl mx-auto text-center">
+    &copy; 2025 MedSmart. All rights reserved.
+  </div>
+</footer>
+
+<!-- JavaScript -->
+<script src="service.js"></script>
+</body>
+</html>
