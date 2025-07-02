@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab Reports | Medlife</title>
+  <!-- Font Awesome 6 Free CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Firebase App SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    mark {
+      background-color: rgb(120, 238, 120); 
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800" style="font-family: 'Poppins', sans-serif;">
+
+  <div id="loading-bar" class="fixed top-0 left-0 h-0.5 bg-red-600 z-[9999] transition-all duration-300 ease-linear w-0"></div>
+
+  <!-- Top Bar -->
+<div class="fixed top-0 left-0 w-full bg-gray-800 text-white text-xs sm:text-sm px-4 pt-2 pb-6 sm:py-2 flex justify-between items-center z-30">
+  <div class="font-semibold">
+    <img src="images/logo.png" class="h-8 sm:h-10 w-auto">
+  </div>
+
+</div>
+
+<!-- Navbar  -->
+<div class="fixed top-[40px] left-0 w-full bg-blue-500 text-white px-6 py-3 mt-4 z-40">
+  <div class="flex justify-center items-center">
+
+    <!-- Desktop Nav -->
+    <ul class="hidden md:flex space-x-6 font-semibold">
+      <li><a href="#" class="hover:text-green-500">ABOUT</a></li>
+      <li><a href="#" class="hover:text-green-500">SERVICES</a></li>
+      <li><a href="#" class="hover:text-green-500">DOCTORS</a></li>
+      <li><a href="#" class="hover:text-green-500">HEALTH PACKAGES</a></li>
+      <li><a href="#" class="hover:text-green-500">MEDICINES</a></li>
+      <li><a href="#" class="hover:text-green-500">CONTACT</a></li>
+    </ul>
+
+    <div class=" flex justify-start items-start space-x-3">
+      <!-- Mobile Menu Icon -->
+      <button id="menuToggle" class="md:hidden text-2xl focus:outline-none">
+        ☰
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu (Hidden by default) -->
+  <div id="mobileMenu" class="hidden flex-col space-y-4 mt-4 md:hidden font-semibold w-[160px] bg-green-100 ml-16 text-gray-800 text-sm" >
+    <button id="closeMenu" class="self-end text-2xl text-red-500">✖</button></br>
+    <a href="#" class="hover:text-green-500 ml-3">ABOUT</a></br>
+    <a href="#" class="hover:text-green-500 ml-3">SERVICES</a></br>
+    <a href="#" class="hover:text-green-500 ml-3">DOCTORS</a></br>
+    <a href="#" class="hover:text-green-500 ml-3">HEALTH PACKAGES</a></br>
+    <a href="#" class="hover:text-green-500 ml-3">MEDICINES</a></br>
+    <a href="#" class="hover:text-green-500 ml-3">CONTACT</a>
+  </div>
+</div>
+
+
+
+  <section class="relative bg-gray-200 h-screen pt-[100px] mb-20">
+    <div id="lab-bg" class="relative h-screen w-full bg-cover bg-center flex items-center transition-all duration-1000 " style="background-image: url('images/lab-bg.jpg');">
+    <div class="absolute inset-0 flex justify-center">
+      <button class="bg-blue-500 bg-opacity-30 border border-blue-500 px-6 py-3 rounded-2xl text-2xl h-14 mt-[400px]">
+        <a href="index.html" class="mr-2 text-gray-800 font-semibold hover:text-blue-700">Home < </a>
+        <a class="ml-2 text-blue-700 font-semibold"> > Lab Report </a>
+      </button>
+    </div>
+    
+    </div>
+
+  </section>
+
+  <section class="max-w-6xl mx-auto p-6">
+    <h2 class="text-3xl font-bold mb-6 text-center text-gray-800 mt-5">Patient Lab Reports</h2>
+
+    <!-- Search Input -->
+    <div class="flex flex-col md:flex-row md:justify-between gap-4 mb-6">
+      <input type="text" id="searchInput" placeholder="Search by patient name..."
+        class="w-full md:w-1/2 p-2 border rounded shadow focus:outline-none focus:ring focus:ring-blue-300" />
+    </div>
+
+    <!-- Reports Table -->
+    <div class="overflow-x-auto">
+      <table class="w-full table-auto border border-gray-200 bg-white shadow-md rounded">
+        <thead class="bg-blue-100">
+          <tr>
+            <th class="px-4 py-2 text-left">Patient Name</th>
+            <th class="px-4 py-2 text-left">Report Type</th>
+            <th class="px-4 py-2 text-left">Date</th>
+            <th class="px-4 py-2 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody id="reportTable">
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-2" data-name="John Doe">Sabita Ale</td>
+            <td class="px-4 py-2">Blood Test</td>
+            <td class="px-4 py-2">2025-06-28</td>
+            <td class="px-4 py-2">
+              <button data-file="John_Doe_BloodTest.pdf" class="download-btn text-green-500 hover:underline hover:text-green-600">Download</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-2" data-name="Sarah Lee">Asim Kafle</td>
+            <td class="px-4 py-2">X-Ray</td>
+            <td class="px-4 py-2">2025-06-25</td>
+            <td class="px-4 py-2">
+              <button data-file="Sarah_Lee_XRay.pdf" class="download-btn text-green-500 hover:underline hover:text-green-600">Download</button>
+            </td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-2" data-name="Michael Smith">Babin KC</td>
+            <td class="px-4 py-2">MRI</td>
+            <td class="px-4 py-2">2025-06-24</td>
+            <td class="px-4 py-2">
+              <button data-file="Michael_Smith_MRI.pdf" class="download-btn text-green-500 hover:underline hover:text-green-600">Download</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+  <footer class="bg-gray-800 text-gray-200 pt-12">
+  <div class="max-w-7xl mx-auto px-6 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <!-- Column 1: Company -->
+    <div>
+      <img src="images/logo.png" class="h-15 w-full">
+    </div>
+
+    <!-- Column 2: Quick Login -->
+    <div>
+      <h4 class="text-xl font-semibold mb-4">Quick Login</h4>
+      <ul class="space-y-2">
+        <li><a href="#" class="hover:text-green-500">Patient</a></li>
+        <li><a href="#" class="hover:text-green-500">Doctors</a></li>
+      </ul>
+    </div>
+
+    <!-- Column 3: Services -->
+    <div>
+      <h4 class="text-xl font-semibold mb-4">Services</h4>
+    <ul class="space-y-2">
+    <li><a href="#" class="hover:text-green-500">Outpatient Department (OPD)</a></li>
+    <li><a href="#" class="hover:text-green-500">24/7 Emergency Services</a></li>
+    <li><a href="#" class="hover:text-green-500">Diagnostic & Imaging</a></li>
+    <li><a href="#" class="hover:text-green-500">Pharmacy Services</a></li>
+    <li><a href="#" class="hover:text-green-500">Specialist Consultations</a></li>
+    <li><a href="#" class="hover:text-green-500">Health Packages</a></li>
+    <li><a href="#" class="hover:text-green-500">Online Appointments</a></li>
+  </ul>
+    </div>
+
+    <!-- Column 4: Get In Touch -->
+    <div>
+      <h4 class="text-xl font-semibold mb-4">Contact</h4>
+      <p><i class="fa-solid fa-location-dot text-red-700 text-2xl mr-2"></i>- Campus Road, Bharatpur, Nepal</p>
+      <p><i class="fa-solid fa-phone text-red-700 text-xl mr-2"></i>- 9812568737, 9812568738 </p>
+      <p><i class="fa-solid fa-envelope text-red-700 text-xl mr-2"></i>- medicare26@gmail.com</p>
+      
+      <!-- Social Icons Placeholder -->
+    </div>
+
+    </div>
+     
+      <div class="mx-auto mt-10 flex justify-center gap-8">
+        <!-- Replace with SVG icons -->
+        <a href="#"><i class="fa-brands fa-facebook-f text-4xl hover:text-blue-400"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter text-4xl hover:text-blue-400"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp text-4xl hover:text-green-400"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram text-4xl hover:text-red-500"></i></a>
+      </div>
+
+
+
+  <!-- Bottom Bar -->
+  <div class="mt-8 mx-7 border-t border-gray-700 pt-6 pb-4 text-center text-sm text-gray-400 flex justify-between">
+      <p class=""><a href="#" class="hover:underline">Terms & conditions</a> | <a href="#" class="hover:underline">Privacy policy</a></p>
+    ©2025 All rights reserved.
+  </div>
+</footer>
+
+
+<script type="module" src="script.js"></script>
+
+
+</body>
+</html>

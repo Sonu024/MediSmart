@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en" class="overflow-x-hidden">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medlife Nav</title>
+  <!-- Font Awesome 6 Free CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Firebase App SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-appear {
+  opacity: 0; /* Start hidden */
+  transform: scale(0.5);
+  transition: all 0.5s ease-out;
+}
+.animate-appear.visible {
+  animation: appear 1s forwards;
+}
+
+
+  </style>
+
+</head>
+<body style="font-family: 'Poppins', sans-serif;" class="overflow-x-hidden text-gray-800">
+
+  <!-- Loading Line -->
+<div id="loading-bar" class="fixed top-0 left-0 h-0.5 bg-red-600 z-[9999] transition-all duration-300 ease-linear w-0"></div>
+
+
+<!-- Top Bar -->
+<div class="fixed top-0 left-0 w-full bg-gray-800 text-white text-xs sm:text-sm px-4 pt-2 pb-6 sm:py-2 flex justify-between items-center z-30">
+  <div class="font-semibold">
+    <img src="images/logo.png" class="h-8 sm:h-10 w-auto">
+  </div>
+
+  <div class="space-x-2 sm:space-x-4 flex items-center">
+    <a href="labreport.html" class="hover:text-green-500 flex items-center text-[10px] sm:text-sm">
+      <i class="fa-solid fa-flask mr-1 text-xs sm:text-sm"></i>
+      <span class="hidden sm:inline">Lab Report</span>
+    </a>
+
+    <a href="#" id="loginBtn"
+      class="text-green-500 text-[10px] sm:text-sm px-2 sm:px-3 py-1 font-semibold border border-green-500 rounded hover:bg-green-500 hover:text-white text-center">
+      Login
+    </a>
+
+    
+  </div>
+</div>
+
+
+
+<!-- Login Modal -->
+<div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+  <div class="bg-white text-black rounded-lg p-6 w-full max-w-md relative">
+    <button id="closeModal" class="absolute top-2 right-2 text-gray-600 text-xl">&times;</button>
+    <h2 id="modalTitle" class="text-2xl font-bold mb-4 text-center">Login</h2>
+    <form id="authForm" class="space-y-4">
+      <label class="block mb-2 text-sm">Email</label>
+      <input type="email" name="email" class="w-full border border-gray-300 rounded p-2" placeholder="Enter your email" required>
+
+      <label class="block mb-2 text-sm">Password</label>
+      <input type="password" name="password" class="w-full border border-gray-300 rounded p-2" placeholder="Enter your password" required>
+
+      <button type="submit" id="submitBtn" class="bg-blue-600 text-white w-full py-2 rounded hover:bg-blue-700">Login</button>
+    </form>
+
+    <div class="text-center mt-4">
+      <span id="toggleText" class="text-sm">Don't have an account?</span>
+      <button id="toggleBtn" class="text-blue-600 hover:underline ml-1">Sign Up</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Navbar  -->
+<div class="fixed top-[40px] left-0 w-full bg-blue-500 text-white px-6 py-3 mt-4 z-40">
+  <div class="flex justify-center items-center">
+
+    <!-- Desktop Nav -->
+    <ul class="hidden md:flex space-x-6 font-semibold">
+      <li><a href="#" class="hover:text-green-500">ABOUT</a></li>
+      <li><a href="#" class="hover:text-green-500">SERVICES</a></li>
+      <li><a href="#" class="hover:text-green-500">DOCTORS</a></li>
+      <li><a href="#" class="hover:text-green-500">HEALTH PACKAGES</a></li>
+      <li><a href="#" class="hover:text-green-500">MEDICINES</a></li>
+      <li><a href="#" class="hover:text-green-500">CONTACT</a></li>
+    </ul>
+
+
+    <div class=" flex justify-start items-start space-x-3">
+      <!-- Mobile Menu Icon -->
+      <button id="menuToggle" class="md:hidden text-2xl focus:outline-none">
+        ☰
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu (Hidden by default) -->
+  <div id="mobileMenu" class="hidden flex-col space-y-4 mt-4 md:hidden font-semibold w-[160px] bg-green-100 ml-16 text-gray-800 text-sm" >
+    <button id="closeMenu" class="self-end text-2xl text-red-500">✖</button></br>
+    <a href="#" class="hover:text-green-500 ml-3">ABOUT</a></br>
+    <a href="#" class="hover:text-green-500 ml-3">SERVICES</a></br>
+    <a href="#" class="hover:text-green-500 ml-3">DOCTORS</a></br>
+    <a href="#" class="hover:text-green-500 ml-3">HEALTH PACKAGES</a></br>
+    <a href="#" class="hover:text-green-500 ml-3">MEDICINES</a></br>
+    <a href="#" class="hover:text-green-500 ml-3">CONTACT</a>
+  </div>
+</div>
+
+
+ <!-- HERO SECTION -->
+<section class="relative bg-gray-200 h-screen pt-[100px]">
+<div id="hero-bg" class="overflow-hidden relative h-screen w-full bg-cover bg-center flex items-center transition-all duration-1000 " style="background-image: url('images/bg.jpg');">
+
+    <div class="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between w-full">
+      <!-- Left Content -->
+      <div class="text-white max-w-xl z-10">
+        <h1 class="text-3xl md:text-5xl text-gray-800 font-bold mb-4">Your Health, Our Priority</h1>
+        <p class="text-lg mb-6 text-gray-800">
+          Trusted by families across Nepal for quality care and excellence.
+        </p>
+        <a href="#appointment" class="inline-block bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-md shadow">
+          Book an Appointment
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- BLUE GRID OVERLAPPING SECTION -->
+<section class="relative z-20 -mt-25">
+  
+  <div class="max-w-7xl mx-auto  bg-blue-500 text-white rounded-md shadow-lg  ml-12 mr-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
+      <!-- appointment -->
+      <div class="text-center py-14 px-6 border border-blue-600 hover:shadow-lg">
+        <div class="text-4xl mb-4">📅</div>
+        <h3 class="text-xl font-semibold mb-2">Online Appointments</h3>
+        <p class="text-sm">Book consultations easily with real-time availability</p>
+      </div>
+      <!-- facilities -->
+      <div class="text-center py-14 px-4 lg:px-6 border border-blue-600 hover:shadow-lg">
+        <div class="text-4xl mb-4">👩‍⚕️</div>
+        <h3 class="text-xl font-semibold mb-2">Comprehensive Facilities</h3>
+        <p class="text-sm">Consult with highly experienced and licensed doctors.</p>
+      </div>
+      <!-- surgery  -->
+      <div class="text-center py-14 px-6 border border-blue-600 hover:shadow-lg">
+        <div class="text-4xl mb-4">🏥</div>
+        <h3 class="text-xl font-semibold mb-2">General Surgery</h3>
+        <p class="text-sm">Lab, pharmacy, and emergency support under one roof.</p>
+      </div>
+      <!-- records -->
+      <div class="text-center py-14 px-6 border border-blue-600 hover:shadow-lg">
+        <div class="text-4xl mb-4">🔐</div>
+        <h3 class="text-xl font-semibold mb-2">Secure Records</h3>
+        <p class="text-sm">Your health data is encrypted and accessible 24/7</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--- Specialities and Procedures --->
+<section class="bg-gray-100 py-12 px-6 md:px-16">
+  <div class="flex flex-col md:flex-row gap-10 items-start">
+    
+    <!-- Left: Specialities List -->
+    <div class="flex-1">
+      <h2 class="text-2xl md:text-3xl font-bold  mb-6 border-b-4 border-black w-max">Specialities</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+        <!-- Card -->
+        <div class="animate-appear flex items-center gap-4 p-4 bg-white shadow rounded-lg hover:shadow-md transition">
+          <img src="images/heart-organ.png" class="h-10 w-10"/>
+          <span class="font-medium">Cardiology</span>
+        </div>
+
+        <div class="animate-appear flex items-center gap-4 p-4 bg-white shadow rounded-lg hover:shadow-md transition">
+          <img src="images/oncology.png" class="h-10 w-10"/>
+          <span class=" font-medium">Surgical Oncology</span>
+        </div>
+
+        <div class="animate-appear flex items-center gap-4 p-4 bg-white shadow rounded-lg hover:shadow-md transition">
+          <img src="images/neurology.png" class="h-10 w-10"/>
+          <span class="font-medium">Neurology</span>
+        </div>
+
+        <div class="animate-appear flex items-center gap-4 p-4 bg-white shadow rounded-lg hover:shadow-md transition">
+          <img src="images/gastroenterology.png" class="h-10 w-10"/>
+          <span class="font-medium">Gastroenterology</span>
+        </div>
+
+        <div class="animate-appear flex items-center gap-4 p-4 bg-white shadow rounded-lg hover:shadow-md transition">
+          <img src="images/kidney.png" class="h-10 w-10"/>
+          <span class="font-medium">Nephrology</span>
+        </div>
+
+        <div class="animate-appear flex items-center gap-4 p-4 bg-white shadow rounded-lg hover:shadow-md transition">
+          <img src="images/kidneyTrans.png" class="h-10 w-10"/>
+          <span class="font-medium">Kidney Transplant Surgery</span>
+        </div>
+
+        <div class="animate-appear flex items-center gap-4 p-4 bg-white shadow rounded-lg hover:shadow-md transition">
+          <img src="images/bone.png" class="h-10 w-10"/>
+          <span class="font-medium">Orthopedic Surgery</span>
+        </div>
+
+        <div class="animate-appear flex items-center gap-4 p-4 bg-white shadow rounded-lg hover:shadow-md transition">
+          <img src="images/massage.png" class="h-10 w-10"/>
+          <span class="font-medium">Physiotherapy & Rehabilitation</span>
+        </div>
+      </div>
+
+      <button class="mt-5 bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-md">
+        VIEW MORE
+      </button>
+    </div>
+
+    <!-- Right: Find a Doctor -->
+    <div class="bg-blue-100 rounded-3xl p-8 md:max-w-sm text-center shadow-md relative">
+      <h3 class="text-xl md:text-2xl font-bold mb-2">Looking for an Expert</h3>
+      <p class=" mb-4">Our team of most experienced doctors are here to help!</p>
+      <div class="relative ">
+      <img src="./images/doctor.jpg" class=" mt-6 rounded-xl shadow-sm" alt="Doctor illustration">
+      <button class="absolute top-3/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-blue-600 font-semibold px-5 py-2 rounded-2xl shadow-md hover:bg-blue-600 hover:text-white border border-blue-600 transition">
+        <a href="#">Find A Doctor </a> 
+      </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!--why to choose us-->
+<section class="bg-[#f4f8ff] py-16 px-6 md:px-12">
+  <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start gap-12">
+    
+    <!-- Left Side: Heading and Description -->
+    <div class="lg:w-1/2">
+      <h2 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
+        Why Patients <span class="text-blue-500">Trust</span> Medismart?
+      </h2>
+      <p class="text-gray-700 mb-8 text-lg">
+        At Medsmart, we combine expertise, care, and technology to provide the best possible outcomes. Our team of experienced professionals puts your health first — with transparency, compassion, and precision.
+      </p>
+      <a href="#services" class="inline-block bg-blue-500 text-white font-semibold px-8 py-3 rounded-full hover:bg-blue-600 transition">
+        Explore Our Services
+      </a>
+    </div>
+
+    <!-- Right Side: Feature Cards -->
+    <div class="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+      
+      <!-- Card 1 -->
+      <div class="animate-appear bg-white p-6 rounded-xl shadow">
+        <div class="text-3xl mb-3">🩺</div>
+        <h3 class="font-semibold text-lg mb-1">Expert Doctors</h3>
+        <p class="text-sm text-gray-600">Board-certified specialists with years of experience in patient-centered care.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="animate-appear bg-white p-6 rounded-xl shadow">
+        <div class="text-3xl mb-3">🏥</div>
+        <h3 class="font-semibold text-lg mb-1">Modern Facilities</h3>
+        <p class="text-sm text-gray-600">State-of-the-art technology and modern equipment for accurate diagnosis and treatment.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="animate-appear bg-white p-6 rounded-xl shadow">
+        <div class="text-3xl mb-3">⚡</div>
+        <h3 class="font-semibold text-lg mb-1">Quick Service</h3>
+        <p class="text-sm text-gray-600">Minimal wait times and efficient care delivery so you get treated fast.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="animate-appear bg-white p-6 rounded-xl shadow">
+        <div class="text-3xl mb-3">💬</div>
+        <h3 class="font-semibold text-lg mb-1">Compassionate Support</h3>
+        <p class="text-sm text-gray-600">Our staff communicates with clarity and empathy—every step of your journey.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!--Health Package-->
+<section class="py-12 bg-gray-100">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-center mb-10">Health Packages</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Package 1 -->
+      <div class="animate-appear bg-white shadow p-6 rounded-lg">
+        <div class="mb-4">
+          <img src="images/executiveCheckup.jpg" class="h-64 w-full object-cover"/>
+        </div>
+        <h3 class="text-xl font-bold">Executive Health Checkup</h3>
+        <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+          <li>Full Blood Profile</li>
+          <li>ECG & Chest X-Ray</li>
+          <li>Ultrasound Abdomen</li>
+          <li>Lipid, Liver, Kidney Function</li>
+        </ul>
+        <p class="mt-4 font-bold text-blue-500">NPR 3,999</p>
+        <button class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
+      </div>
+
+      <!-- Package 2 -->
+      <div class="animate-appear bg-white shadow p-6 rounded-lg">
+        <div class="mb-4">
+          <img src="images/seniorCheckup.jpg" class="h-64 w-full object-cover"/>
+        </div>
+        <h3 class="text-xl font-bold">Senior Citizen Package</h3>
+        <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+          <li>ECG & Blood Sugar</li>
+          <li>Kidney & Liver Tests</li>
+          <li>Bone Density & Eyes Checkup</li>
+          <li>Cardiac Risk Assessment</li>
+        </ul>
+        <p class="mt-4 font-bold text-blue-500">NPR 2,999</p>
+        <button class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
+      </div>
+
+      <!-- Package 3 -->
+      <div class="animate-appear bg-white shadow p-6 rounded-lg">
+        <div class="mb-4">
+          <img src="images/womenCheckup.jpg" class="h-64 w-full object-cover"/>
+        </div>
+        <h3 class="text-xl font-bold">Women’s Wellness Package</h3>
+        <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+          <li>Pap Smear & Mammography</li>
+          <li>Thyroid & Hormonal Profile</li>
+          <li>Vitamin D, B12</li>
+          <li>Pelvic Ultrasound</li>
+        </ul>
+        <p class="mt-4 font-bold text-blue-500">NPR 3,499</p>
+        <button class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
+      </div>
+    </div>
+
+  <div class="flex justify-center mt-6">
+    <a href="#" class="text-lg font-medium text-blue-600 hover:text-blue-700">
+      View more...
+    </a>
+  </div>
+  </div>
+</section>
+
+
+<!--counter--->
+<section class=" bg-blue-50 ">
+  <div class="relative max-w-6xl mx-auto text-center px-4">
+    <div class="absolute inset-0">
+      <img src="images/bg-counter.jpg" class="w-full md:h-[200px] h-[600px] object-cover" />
+    </div>
+
+    <div class="relative grid grid-cols-1 md:grid-cols-4 gap-8 pt-16 pb-24">
+      <div>
+        <div class="text-5xl font-bold text-blue-600" data-count="15000">0</div>
+        <p class="mt-2 text-lg font-medium">Happy Patients</p>
+      </div>
+
+      <div>
+        <div class="text-5xl font-bold text-blue-600" data-count="3500">0</div>
+        <p class="mt-2 text-lg font-medium">Surgeries Done</p>
+      </div>
+
+      <div>
+        <div class="text-5xl font-bold text-blue-600" data-count="250">0</div>
+        <p class="mt-2 text-lg font-medium">Expert Doctors</p>
+      </div>
+
+      <div>
+        <div class="text-5xl font-bold text-blue-600" data-count="20">0</div>
+        <p class="mt-2 text-lg font-medium">Years of Service</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="flex gap-1 flex-col md:flex-row">
+    <div class="bg-blue-100 flex-1 p-10 text-center">
+      <div class="rounded-full h-16 w-16 shadow bg-white flex items-center justify-center mx-auto mb-4 ">
+         <i class="fa-solid fa-mobile-screen-button text-4xl text-blue-600"></i>
+      </div>
+      <p><a href="tel:+977 -01- 442 6543" class=" text-blue-600 text-2xl font-semibold">Contact Hospital</a></p>
+      <p><a href="tel:+977 -01- 442 6543" class="text-md ">+977 -01- 442 6543</a></p>
+    </div>
+
+      <div class="bg-blue-100 flex-1 p-10 text-center">
+      <div class="rounded-full h-16 w-16 shadow bg-white flex items-center justify-center mx-auto mb-4 ">
+         <i class="fa-solid fa-phone-volume text-4xl text-blue-600"></i>
+      </div>
+      <p><a href="tel:+977 -01- 442 6543" class=" text-blue-600 text-2xl font-semibold">Ambulance Service</a></p>
+      <p><a href="tel:+977 -01- 442 6543" class="text-md">+977 -01- 421 6503</a></p>
+    </div>
+
+      <div class="bg-blue-100 flex-1 p-10 text-center">
+      <div class="rounded-full h-16 w-16 shadow bg-white flex items-center justify-center mx-auto mb-4 ">
+         <i class="fa-solid fa-location-dot text-4xl text-blue-600"></i>
+      </div>
+      <p><a href="#" class=" text-blue-600 text-2xl font-semibold">Map & Direction</a></p>
+      <p><a href="#" class="text-md">Bharatpur-10, Chitwan</a></p>
+    </div>
+
+  </div>
+</section>
+
+
+<footer class="bg-gray-800 text-gray-200 pt-12">
+  <div class="max-w-7xl mx-auto px-6 md:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <!-- Column 1: Company -->
+    <div>
+      <img src="images/logo.png" class="h-15 w-full">
+    </div>
+
+    <!-- Column 2: Quick Login -->
+    <div>
+      <h4 class="text-xl font-semibold mb-4">Quick Login</h4>
+      <ul class="space-y-2">
+        <li><a href="#" class="hover:text-green-500">Patient</a></li>
+        <li><a href="#" class="hover:text-green-500">Doctors</a></li>
+      </ul>
+    </div>
+
+    <!-- Column 3: Services -->
+    <div>
+      <h4 class="text-xl font-semibold mb-4">Services</h4>
+    <ul class="space-y-2">
+    <li><a href="#" class="hover:text-green-500">Outpatient Department (OPD)</a></li>
+    <li><a href="#" class="hover:text-green-500">24/7 Emergency Services</a></li>
+    <li><a href="#" class="hover:text-green-500">Diagnostic & Imaging</a></li>
+    <li><a href="#" class="hover:text-green-500">Pharmacy Services</a></li>
+    <li><a href="#" class="hover:text-green-500">Specialist Consultations</a></li>
+    <li><a href="#" class="hover:text-green-500">Health Packages</a></li>
+    <li><a href="#" class="hover:text-green-500">Online Appointments</a></li>
+  </ul>
+    </div>
+
+    <!-- Column 4: Get In Touch -->
+    <div>
+      <h4 class="text-xl font-semibold mb-4">Contact</h4>
+      <p><i class="fa-solid fa-location-dot text-red-700 text-2xl mr-2"></i>- Campus Road, Bharatpur, Nepal</p>
+      <p><i class="fa-solid fa-phone text-red-700 text-xl mr-2"></i>- 9812568737, 9812568738 </p>
+      <p><i class="fa-solid fa-envelope text-red-700 text-xl mr-2"></i>- medicare26@gmail.com</p>
+      
+      <!-- Social Icons Placeholder -->
+    </div>
+
+    </div>
+     
+      <div class="mx-auto mt-10 flex justify-center gap-8">
+        <!-- Replace with SVG icons -->
+        <a href="#"><i class="fa-brands fa-facebook-f text-4xl hover:text-blue-400"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter text-4xl hover:text-blue-400"></i></a>
+        <a href="#"><i class="fa-brands fa-whatsapp text-4xl hover:text-green-400"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram text-4xl hover:text-red-500"></i></a>
+      </div>
+
+  
+
+  <!-- Bottom Bar -->
+  <div class="mt-8 mx-7 border-t border-gray-700 pt-6 pb-4 text-center text-sm text-gray-400 flex justify-between">
+      <p class=""><a href="#" class="hover:underline">Terms & conditions</a> | <a href="#" class="hover:underline">Privacy policy</a></p>
+    ©2025 All rights reserved.
+  </div>
+</footer>
+
+
+<script src="script.js" type="module"></script>
+</body>
+</html>
