@@ -60,7 +60,7 @@
             <h3 class="text-md font-semibold mb-2">Cart Items</h3>
             <ul id="cartItems" class="space-y-2"></ul>
             <button id="checkoutBtn"
-                    class="mt-3 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition disabled:opacity-50"
+                    class="mt-3 w-full bg-green-500 text-white py-2 rounded hover:bg-green-600 transition disabled:opacity-50"
                     disabled>
               Checkout
             </button>
@@ -135,11 +135,11 @@
         <p class="text-sm text-gray-600 mb-2">${product.category}</p>
         <p class="text-green-600 font-bold mb-2">Rs. ${product.price}</p>
         <button onclick="addToCart(${product.id})"
-                class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mb-2">
+                class="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition mb-2">
           Add to Cart
         </button>
         <button onclick="buyNow(${product.id})"
-                class="bg-green-600 text-white py-2 rounded hover:bg-green-700 transition">
+                class="bg-green-500 text-white py-2 rounded hover:bg-green-600 transition">
           Buy Now
         </button>
       `;
@@ -173,7 +173,7 @@
     for (let i = 1; i <= totalPages; i++) {
       const pageBtn = document.createElement("button");
       pageBtn.textContent = i;
-      pageBtn.className = `px-3 py-1 rounded border ${currentPage === i ? "bg-blue-600 text-white" : "text-blue-600 border-blue-600 hover:bg-blue-100"}`;
+      pageBtn.className = `px-3 py-1 rounded border ${currentPage === i ? "bg-blue-500 text-white" : "text-blue-600 border-blue-600 hover:bg-blue-100"}`;
       pageBtn.onclick = () => {
         currentPage = i;
         filterProducts();
