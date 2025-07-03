@@ -8,120 +8,173 @@
 </head>
 <body class="bg-gray-100 font-sans">
 
-  <section class="py-12 bg-gray-100">
+  <!-- Booking Modal -->
+<div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white rounded-lg p-6 w-full max-w-md">
+    <h2 class="text-xl font-bold mb-4 text-center">Book Health Package</h2>
+    
+    <form id="bookingForm">
+      <input type="text" id="name" placeholder="Your Name" class="w-full mb-3 px-4 py-2 border rounded" required>
+      <input type="email" id="email" placeholder="Your Email" class="w-full mb-3 px-4 py-2 border rounded" required>
+      <input type="tel" id="phone" placeholder="Phone Number" class="w-full mb-3 px-4 py-2 border rounded" required>
+
+      <div class="flex justify-center gap-4 mt-4">
+        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Submit</button>
+        <button type="button" onclick="closeModal()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Close</button>
+      </div>
+    </form>
+
+    <p id="thankYouMsg" class="text-green-600 mt-4 text-center font-semibold hidden">Thank you for booking!</p>
+  </div>
+</div>
+
+
+  <section class="py-12">
     <div class="max-w-6xl mx-auto px-4">
       <h2 class="text-3xl font-bold text-center mb-10">Health Packages</h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Package 1 -->
-        <div class="animate-appear bg-white shadow p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-          <div class="mb-4">
-            <img src="images/Executive  pkg.jpeg" class="h-64 w-full object-cover" alt="Executive Health"/>
-          </div>
-          <h3 class="text-xl font-bold">Executive Health Checkup</h3>
-          <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
-            <li>Full Blood Profile</li>
-            <li>ECG & Chest X-Ray</li>
-            <li>Ultrasound Abdomen</li>
-            <li>Lipid, Liver, Kidney Function</li>
-          </ul>
-          <p class="mt-4 font-bold text-blue-500">NPR 3,999</p>
-          <a href="contact.html" class="inline-block mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-  Book Now
-</a>
+            <!-- Repeat this card for each package -->
+            <div class="bg-white shadow p-6 rounded-lg transform transition duration-300 hover:scale-105">
+                <div class="mb-4">
+                    <img src="images/Executive  pkg.jpeg" class="h-64 w-full object-cover rounded" alt="Executive Health"/>
+                </div>
+                <h3 class="text-xl font-bold">Executive Health Checkup</h3>
+                <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                    <li>Full Blood Profile</li>
+                    <li>ECG & Chest X-Ray</li>
+                    <li>Ultrasound Abdomen</li>
+                    <li>Lipid, Liver, Kidney Function</li>
+                </ul>
+                <p class="mt-4 font-bold text-blue-500">NPR 3,999</p>
+                <button onclick="openModal()" class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
+            </div>
+
+            <!-- Package 2 -->
+            <div class="animate-appear bg-white shadow p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+                <div class="mb-4">
+                    <img src="images/Old pkg.jpeg" class="h-64 w-full object-cover" alt="Senior Checkup"/>
+                </div>
+                <h3 class="text-xl font-bold">Senior Citizen Package</h3>
+                <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                    <li>ECG & Blood Sugar</li>
+                    <li>Kidney & Liver Tests</li>
+                    <li>Bone Density & Eyes Checkup</li>
+                    <li>Cardiac Risk Assessment</li>
+                </ul>
+                <p class="mt-4 font-bold text-blue-500">NPR 2,999</p>
+                <button onclick="openModal()" class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
+            </div>
+            
+            <!-- Package 3 -->
+            <div class="animate-appear bg-white shadow p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+                <div class="mb-4">
+                    <img src="images/Women pkg.jpg" class="h-64 w-full object-cover" alt="Women's Wellness"/>
+                </div>
+                <h3 class="text-xl font-bold">Women’s Wellness Package</h3>
+                <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                    <li>Pap Smear & Mammography</li>
+                    <li>Thyroid & Hormonal Profile</li>
+                    <li>Vitamin D, B12</li>
+                    <li>Pelvic Ultrasound</li>
+                </ul>
+                <p class="mt-4 font-bold text-blue-500">NPR 3,499</p>
+                <button onclick="openModal()" class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
+            </div>
+
+            <!-- Package 4 -->
+            <div class="animate-appear bg-white shadow p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+                <div class="mb-4">
+                    <img src="images/Diabetes pkg.jpg" class="h-64 w-full object-cover" alt="Diabetes Care"/>
+                </div>
+                <h3 class="text-xl font-bold">Diabetes Care Package</h3>
+                <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                    <li>Blood Sugar (Fasting & PP)</li>
+                    <li>HbA1c & Kidney Function</li>
+                    <li>Eye & Foot Examination</li>
+                    <li>Diabetologist Consultation</li>
+                </ul>
+                <p class="mt-4 font-bold text-blue-500">NPR 2,499</p>
+                <button onclick="openModal()" class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
+            </div>
+
+        
+
+            <!-- Package 5 -->
+            <div class="animate-appear bg-white shadow p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+                <div class="mb-4">
+                    <img src="images/Basic pkg.JPG" class="h-64 w-full object-cover" alt="Basic Checkup"/>
+                </div>
+                <h3 class="text-xl font-bold">Basic Health Checkup</h3>
+                <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                    <li>CBC & Urine Routine</li>
+                    <li>Blood Sugar & BP</li>
+                    <li>General Physical Examination</li>
+                    <li>Doctor Consultation</li>
+                </ul>
+                <p class="mt-4 font-bold text-blue-500">NPR 1,199</p>
+                <button onclick="openModal()" class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
+            </div>
+
+            <!-- Package 6 -->
+            <div class="animate-appear bg-white shadow p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
+                <div class="mb-4">
+                    <img src="images/Child pkg.jpg" class="h-64 w-full object-cover" alt="Child Package"/>
+                </div>
+                <h3 class="text-xl font-bold">Child Health Package</h3>
+                <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
+                    <li>Growth & Nutrition Screening</li>
+                    <li>Vision & Hearing Test</li>
+                    <li>Immunization Review</li>
+                    <li>Pediatrician Consultation</li>
+                </ul>
+                <p class="mt-4 font-bold text-blue-500">NPR 1,799</p>
+                <button onclick="openModal()" class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
+            </div>
+
+
 
         </div>
-
-        <!-- Package 2 -->
-        <div class="animate-appear bg-white shadow p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-          <div class="mb-4">
-            <img src="images/Old pkg.jpeg" class="h-64 w-full object-cover" alt="Senior Checkup"/>
-          </div>
-          <h3 class="text-xl font-bold">Senior Citizen Package</h3>
-          <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
-            <li>ECG & Blood Sugar</li>
-            <li>Kidney & Liver Tests</li>
-            <li>Bone Density & Eyes Checkup</li>
-            <li>Cardiac Risk Assessment</li>
-          </ul>
-          <p class="mt-4 font-bold text-blue-500">NPR 2,999</p>
-          <button class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
-        </div>
-
-        <!-- Package 3 -->
-        <div class="animate-appear bg-white shadow p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-          <div class="mb-4">
-            <img src="images/Women pkg.jpg" class="h-64 w-full object-cover" alt="Women's Wellness"/>
-          </div>
-          <h3 class="text-xl font-bold">Women’s Wellness Package</h3>
-          <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
-            <li>Pap Smear & Mammography</li>
-            <li>Thyroid & Hormonal Profile</li>
-            <li>Vitamin D, B12</li>
-            <li>Pelvic Ultrasound</li>
-          </ul>
-          <p class="mt-4 font-bold text-blue-500">NPR 3,499</p>
-          <button class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
-        </div>
-
-        <!-- Package 4 -->
-        <div class="animate-appear bg-white shadow p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-          <div class="mb-4">
-            <img src="images/Diabetes pkg.jpg" class="h-64 w-full object-cover" alt="Diabetes Care"/>
-          </div>
-          <h3 class="text-xl font-bold">Diabetes Care Package</h3>
-          <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
-            <li>Blood Sugar (Fasting & PP)</li>
-            <li>HbA1c & Kidney Function</li>
-            <li>Eye & Foot Examination</li>
-            <li>Diabetologist Consultation</li>
-          </ul>
-          <p class="mt-4 font-bold text-blue-500">NPR 2,499</p>
-          <button class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
-        </div>
-
-       
-
-        <!-- Package 5 -->
-        <div class="animate-appear bg-white shadow p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-          <div class="mb-4">
-            <img src="images/Basic pkg.JPG" class="h-64 w-full object-cover" alt="Basic Checkup"/>
-          </div>
-          <h3 class="text-xl font-bold">Basic Health Checkup</h3>
-          <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
-            <li>CBC & Urine Routine</li>
-            <li>Blood Sugar & BP</li>
-            <li>General Physical Examination</li>
-            <li>Doctor Consultation</li>
-          </ul>
-          <p class="mt-4 font-bold text-blue-500">NPR 1,199</p>
-          <button class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
-        </div>
-
-        <!-- Package 6 -->
-        <div class="animate-appear bg-white shadow p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105">
-          <div class="mb-4">
-            <img src="images/Child pkg.jpg" class="h-64 w-full object-cover" alt="Child Package"/>
-          </div>
-          <h3 class="text-xl font-bold">Child Health Package</h3>
-          <ul class="mt-2 text-sm text-gray-700 list-disc list-inside">
-            <li>Growth & Nutrition Screening</li>
-            <li>Vision & Hearing Test</li>
-            <li>Immunization Review</li>
-            <li>Pediatrician Consultation</li>
-          </ul>
-          <p class="mt-4 font-bold text-blue-500">NPR 1,799</p>
-          <button class="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Book Now</button>
-        </div>
-
-      
-      </div>
 
       <div class="flex justify-center mt-10">
         <a href="#" class="text-lg font-medium text-blue-600 hover:text-blue-800">View more health plans &gt;&gt;</a>
       </div>
     </div>
   </section>
+
+  <script>
+    const modal = document.getElementById('bookingModal');
+  const form = document.getElementById('bookingForm');
+  const thankYouMsg = document.getElementById('thankYouMsg');
+
+  function openModal() {
+    modal.classList.remove('hidden');
+    form.classList.remove('hidden');
+    thankYouMsg.classList.add('hidden');
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    form.reset();
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    form.classList.add('hidden');
+    thankYouMsg.classList.remove('hidden');
+  });
+
+  // Close modal when clicking outside the white box after submission
+  modal.addEventListener('click', function (e) {
+    const modalContent = modal.querySelector('div.bg-white');
+    if (thankYouMsg.classList.contains('block') || !form.classList.contains('block')) {
+      if (!modalContent.contains(e.target)) {
+        closeModal();
+      }
+    }
+  });
+    
+  </script>
 
 </body>
 </html>
