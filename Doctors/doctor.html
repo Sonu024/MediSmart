@@ -52,8 +52,8 @@
 
   <!-- Search Bar -->
   <div class="mt-12 max-w-xl mx-auto relative">
-    <input type="text" id="searchInput" placeholder="Search doctor by name..." class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10">
-    <button id="clearSearch" class="absolute right-3 top-2.5 text-gray-500 hover:text-red-600 text-xl hidden">×</button>
+    <input type="text" id="searchInput" placeholder="Search doctor by name..." class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2  focus:ring-blue-500 pr-10">
+    <button id="clearSearch" class="absolute right-3 top-2.5 text-red-500 hover:text-red-600 text-xl hidden">🗙</button>
   </div>
 
   <!-- Doctors Grid -->
@@ -74,7 +74,7 @@
             <p id="modalDesc" class="text-gray-600 text-sm mb-4"></p>
   
             <!-- Appointment Button -->
-            <button id="bookAppointmentBtn" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-300">
+            <button id="bookAppointmentBtn" class="mt-4 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-600 transition duration-300">
                 Book Appointment
             </button>
         </div>
@@ -82,7 +82,7 @@
   </div>
 
   <!-- Back to Top Button -->
-  <button id="backToTop" class="hidden fixed bottom-6 right-6 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700">↑ Top</button>
+  <button id="backToTop" class="hidden fixed bottom-6 right-6 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600">↑ Top</button>
 
   <script>
     const doctors = [
@@ -182,7 +182,7 @@
       const totalPages = Math.ceil(doctors.length / cardsPerPage);
       for (let i = 1; i <= totalPages; i++) {
         pagination.innerHTML += `
-          <button class="px-3 py-1 border rounded ${i === currentPage ? 'bg-blue-700 text-white' : 'bg-white text-blue-700'}" onclick="changePage(${i})">${i}</button>
+          <button class="px-3 py-1 border rounded ${i === currentPage ? 'bg-blue-600 text-white' : 'bg-white text-blue-700'}" onclick="changePage(${i})">${i}</button>
         `;
       }
     }
